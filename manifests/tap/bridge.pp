@@ -32,13 +32,18 @@ define network::tap::bridge (
   $bridge,
   $userctl = false,
   $bootproto = 'none',
-  $onboot = true,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
   validate_bool($userctl)
   validate_bool($onboot)
+  $onboot = $ensure ? {
+    'up'       => 'yes',
+    'down'     => 'no',
+    default => undef,
+  }
+
   $interface=$name
   file { "ifcfg-${interface}":
     ensure  => 'present',
