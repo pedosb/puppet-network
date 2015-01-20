@@ -27,7 +27,7 @@
 #
 # Copyright (C) 2015 Pedro Batista, unless otherwise noted.
 #
-define network::if::bridge (
+define network::tap::bridge (
   $ensure,
   $bridge,
   $userctl=false,
@@ -49,4 +49,4 @@ define network::if::bridge (
     content  => template('network/ifcfg-tap.erb'),
     notify => Service['network'],
   }
-} # define network::if::bridge
+} # define network::tap::bridge
