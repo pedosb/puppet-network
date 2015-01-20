@@ -1,0 +1,12 @@
+###
+### File managed by Puppet
+###
+DEVICE=<%= @interface %>
+BOOTPROTO=<%= @bootproto %>
+ONBOOT=<%= @onboot %>
+TYPE=Tap
+<% if @userctl %>USERCTL=yes
+<% end -%>
+<% if !@bridge.empty? %>BRIDGE=<%= @bridge %>
+<% end -%>
+NM_CONTROLLED=no
