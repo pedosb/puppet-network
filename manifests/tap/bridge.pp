@@ -6,7 +6,7 @@
 #
 #   $ensure        - required - up|down
 #   $bridge        - required - bridge interface name
-#   $userctl       - optional - defaults to yes
+#   $userctl       - optional - defaults to false
 #
 # === Actions:
 #
@@ -30,9 +30,9 @@
 define network::tap::bridge (
   $ensure,
   $bridge,
-  $userctl=false,
-  $bootproto='none',
-  $onboot=yes,
+  $userctl = false,
+  $bootproto = 'none',
+  $onboot = true,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -41,12 +41,12 @@ define network::tap::bridge (
   validate_bool($onboot)
   $interface=$name
   file { "ifcfg-${interface}":
-    ensure    => 'present',
-    mode       => '0644',
-    owner    => 'root',
-    group     => 'root',
+    ensure  => 'present',
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
     path    => "/etc/sysconfig/network-scripts/ifcfg-${interface}",
-    content  => template('network/ifcfg-tap.erb'),
-    notify => Service['network'],
+    content => template('network/ifcfg-tap.erb'),
+    notify  => Service['network'],
   }
 } # define network::tap::bridge
