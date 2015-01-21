@@ -37,7 +37,6 @@ define network::tap::bridge (
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
   validate_bool($userctl)
-  validate_bool($onboot)
   $onboot = $ensure ? {
     'up'       => 'yes',
     'down'     => 'no',
